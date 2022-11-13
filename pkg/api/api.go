@@ -7,7 +7,7 @@ type Graph interface {
 }
 
 type Node interface {
-	ConnectedNodes() []Node
+	AdjacentNodes() []Node
 	Edges() []Edge
 }
 
@@ -38,4 +38,9 @@ type EdgeBuilder interface {
 type NodeBuilder interface {
 	Build() []Node
 	SetEdges(edges []Node) NodeBuilder
+}
+
+type Visitor interface {
+	// Visit returns a bool to signal if the visitor found a match.
+	Visit(node Node) bool
 }
