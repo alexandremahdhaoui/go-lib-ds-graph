@@ -42,3 +42,45 @@ func NodesWithoutIncomingEdge(nodes []api.Node, edges []api.Edge) []api.Node {
 	}
 	return without
 }
+
+func popStack[T any](stack []T) ([]T, T, error) {
+	switch i := len(stack); {
+	case i > 1:
+		return stack[:i-1], stack[i-1], nil
+	case i == 1:
+		return make([]T, 0), stack[0], nil
+	default:
+		return nil, nil, fmt.Errorf("stack should have at least 1 element")
+	}
+}
+
+func dequeue[T any](queue []T) ([]T, T, error) {
+	switch i := len(queue); {
+	case i > 1:
+		return queue[1:], queue[0], nil
+	case i == 1:
+		return make([]T, 0), queue[0], nil
+	default:
+		return nil, nil, fmt.Errorf("queue should have at least 1 element")
+	}
+}
+
+func edgeSet(g api.Graph) map[api.Edge]struct{} {
+	var set map[api.Edge]struct{}
+	for _, edge := range g.Edges() {
+		set[edge] = struct{}{}
+	}
+	return set
+}
+
+func edgeSetToSlice(edges map[api.Edge]struct{}) []api.Edge {
+	var edgeSlice []api.Edge
+	for edge, _ := range edges {
+		edgeSlice = append(edgeSlice, edge)
+	}
+	return edgeSlice
+}
+
+func nodeWithoutIncomingEdge(node api.Node, edges map[api.Edge]struct{}) []api.Node {
+	return NodesWithoutIncomingEdge([]api.Node{node}, edgeSetToSlice(edges))
+}

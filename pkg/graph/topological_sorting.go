@@ -20,7 +20,7 @@ func KahnTopologicalSortingAlgorithm(g api.Graph) ([]api.Node, error) {
 	// while there is still nodes without incoming edges
 	for empty := false; !empty; empty = len(without) == 0 {
 		// pop one of these nodes from the list
-		node, without, _ = popQueue(without)
+		without, node, _ = dequeue(without)
 		// append the node to the sortedOrder
 		sortedOrder = append(sortedOrder, node)
 		// for each edges of this node to other connected Node:
@@ -40,35 +40,4 @@ func KahnTopologicalSortingAlgorithm(g api.Graph) ([]api.Node, error) {
 		return nil, fmt.Errorf("couldn't not compute sorted order; graph has at least one cycle")
 	}
 	return sortedOrder, nil
-}
-
-func popQueue[T any](queue []T) (T, []T, error) {
-	switch i := len(queue); {
-	case i > 1:
-		return queue[0], queue[1:], nil
-	case i == 1:
-		return queue[0], make([]T, 0), nil
-	default:
-		return nil, nil, fmt.Errorf("queue should have at least 1 element")
-	}
-}
-
-func edgeSet(g api.Graph) map[api.Edge]struct{} {
-	var set map[api.Edge]struct{}
-	for _, edge := range g.Edges() {
-		set[edge] = struct{}{}
-	}
-	return set
-}
-
-func edgeSetToSlice(edges map[api.Edge]struct{}) []api.Edge {
-	var edgeSlice []api.Edge
-	for edge, _ := range edges {
-		edgeSlice = append(edgeSlice, edge)
-	}
-	return edgeSlice
-}
-
-func nodeWithoutIncomingEdge(node api.Node, edges map[api.Edge]struct{}) []api.Node {
-	return NodesWithoutIncomingEdge([]api.Node{node}, edgeSetToSlice(edges))
 }
