@@ -37,7 +37,7 @@ func KahnTopologicalSortingAlgorithm(g api.Graph) ([]api.Node, error) {
 	}
 	// If the graph has remaining edges, then there is at least one cycle
 	if len(remainingEdges) != 0 {
-		return nil, fmt.Errorf("couldn't not compute sorted order; graph has at least one cycle")
+		return nil, fmt.Errorf("sorted order could not be computed; graph has at least one cycle")
 	}
 	return sortedOrder, nil
 }
