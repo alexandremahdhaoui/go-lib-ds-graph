@@ -18,7 +18,7 @@ func KahnTopologicalSortingAlgorithm(g api.Graph) ([]api.Node, error) {
 
 	var node api.Node
 	// while there is still nodes without incoming edges
-	for empty := false; !empty; empty = len(without) == 0 {
+	for len(without) > 0 {
 		// pop one of these nodes from the list
 		without, node, _ = dequeue(without)
 		// append the node to the sortedOrder
