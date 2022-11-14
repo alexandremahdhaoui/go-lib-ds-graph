@@ -43,14 +43,14 @@ func NodesWithoutIncomingEdge(nodes []api.Node, edges []api.Edge) []api.Node {
 	return without
 }
 
-func popStack[T any](stack []T) ([]T, T, error) {
+func unstack[T any](stack []T) ([]T, T, error) {
 	switch i := len(stack); {
 	case i > 1:
 		return stack[:i-1], stack[i-1], nil
 	case i == 1:
 		return make([]T, 0), stack[0], nil
 	default:
-		return nil, nil, fmt.Errorf("stack should have at least 1 element")
+		panic("len(stack) should be > 0 to unstack")
 	}
 }
 
@@ -61,7 +61,7 @@ func dequeue[T any](queue []T) ([]T, T, error) {
 	case i == 1:
 		return make([]T, 0), queue[0], nil
 	default:
-		return nil, nil, fmt.Errorf("queue should have at least 1 element")
+		panic("len(queue) should be > 0 to dequeue")
 	}
 }
 
