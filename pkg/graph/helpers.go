@@ -28,7 +28,7 @@ func IsAcyclic(g api.Graph) (bool, error) {
 // 2. Loop over all nodes of the graph, if NOT node in the set of nodes with incoming edges, then append it to the
 // list of nodes without edges
 func NodesWithoutIncomingEdge(nodes []api.Node, edges []api.Edge) []api.Node {
-	var with map[api.Node]struct{}
+	with := make(map[api.Node]struct{})
 	for _, edge := range edges {
 		with[edge.End()] = struct{}{}
 	}
@@ -66,7 +66,7 @@ func dequeue[T any](queue []T) ([]T, T, error) {
 }
 
 func edgeSet(g api.Graph) map[api.Edge]struct{} {
-	var set map[api.Edge]struct{}
+	set := make(map[api.Edge]struct{})
 	for _, edge := range g.Edges() {
 		set[edge] = struct{}{}
 	}
