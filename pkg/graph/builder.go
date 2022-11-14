@@ -60,7 +60,7 @@ func (b *Builder) InduceEdges() api.Builder {
 //
 // 3. Use the Builder to set the generated []api.Node.
 func (b *Builder) InduceNodes() api.Builder {
-	var nodeSet map[api.Node]struct{}
+	nodeSet := make(map[api.Node]struct{})
 	for _, edge := range b.graph.Edges() {
 		nodeSet[edge.Start()] = struct{}{}
 		nodeSet[edge.End()] = struct{}{}
