@@ -47,7 +47,7 @@ func InternalDFS(
 	}
 
 	for len(stack) > 0 {
-		stack, node, _ = popStack(stack)
+		stack, node, _ = unstack(stack)
 		if stop := InternalDFS(node, visitor, visited, stack); stop {
 			return stop
 		}
