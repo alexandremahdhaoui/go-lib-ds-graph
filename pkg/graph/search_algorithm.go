@@ -15,7 +15,7 @@ func DFS(
 	node api.Node,
 	visitor api.Visitor,
 ) bool {
-	var visited NodeSet
+	visited := make(NodeSet)
 	var stack []api.Node
 	return InternalDFS(node, visitor, visited, stack)
 }
@@ -60,7 +60,7 @@ func BFS(
 	node api.Node,
 	visitor api.Visitor,
 ) bool {
-	var visited NodeSet
+	visited := make(NodeSet)
 	var queue []api.Node
 	return InternalBFS(node, visitor, visited, queue)
 }
